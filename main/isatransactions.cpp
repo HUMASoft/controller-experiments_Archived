@@ -18,6 +18,12 @@ main ()
     //Controllers
     double dts=0.01;
 
+
+    //fpd w=200 pm=70
+    vector<double> npd ={0.1237 ,   0.6847  ,  1.4257   , 1.3013  ,  0.4368};
+    vector<double> dpd ={0.6943  ,  3.0658  ,  5.0485  ,  3.6770  ,  1.0000};
+
+
     //fpi w=25 pm=70 //kept from last experiments.
     vector<double> npi ={0.3354  ,  0.3724  , -1.8968 ,  -0.5654  ,  1.9306};
     vector<double> dpi ={0.2381  ,  0.3986  , -1.0645  , -0.5716  ,  1.0000};
@@ -26,21 +32,21 @@ main ()
 //    vector<double> npd ={-5310.6413 ,  33607.557 , -52182.099 ,  23885.413};
 //    vector<double> dpd ={0. ,  0.221738 , -1.1842456  , 1.};
 
-    //w20p65isom matlab
-    vector<double> npd ={16.1209  , -8.1197  ,-92.0813 ,  74.6016  ,172.6901};
-    vector<double> dpd ={  -0.1151   , 0.0179  ,  1.3106  ,  2.1779   , 1.0000};
+//    //w20p65isom matlab
+//    vector<double> npd ={16.1209  , -8.1197  ,-92.0813 ,  74.6016  ,172.6901};
+//    vector<double> dpd ={  -0.1151   , 0.0179  ,  1.3106  ,  2.1779   , 1.0000};
 
-//    SystemBlock pi1(npi,dpi,1);
-//    SystemBlock pi3(npi,dpi,1);
-//    SystemBlock pi2(npi,dpi,1);
+    SystemBlock pi1(npi,dpi,1);
+    SystemBlock pi3(npi,dpi,1);
+    SystemBlock pi2(npi,dpi,1);
 
-    PIDBlock pi1(100/14,1000/14,0,dts);
-    PIDBlock pi2(100/14,1000/14,0,dts);
-    PIDBlock pi3(100/14,1000/14,0,dts);
+//    PIDBlock pi1(10,100,0,dts);
+//    PIDBlock pi2(10,100,0,dts);
+//    PIDBlock pi3(10,100,0,dts);
 
-    SystemBlock pd1(npd,dpd,1);
-    SystemBlock pd2(npd,dpd,1);
-    SystemBlock pd3(npd,dpd,1);
+    SystemBlock pd1(npd,dpd,1000);
+    SystemBlock pd2(npd,dpd,1000);
+    SystemBlock pd3(npd,dpd,1000);
 
 
 
@@ -87,7 +93,7 @@ main ()
 //    posan2=(0.1-lengths[1])*180/(0.01*M_PI);
 //    posan3=(0.1-lengths[2])*180/(0.01*M_PI);
 double posan1, posan2, posan3;
-    posan1=30;
+    posan1=100;
     posan2=-posan1/2;
     posan3=-posan1/2;
     cout << "pos1 " << posan1  << ", pos2 " << posan2 << ", pos3 " << posan3 <<endl;
@@ -99,7 +105,7 @@ double posan1, posan2, posan3;
     double ep2,ev2;
     double ep3,ev3;
 
-    double interval=3; //in seconds
+    double interval=2; //in seconds
 
     pd1.SetSaturation(-30,30);
     pd2.SetSaturation(-30,30);
@@ -123,10 +129,10 @@ double posan1, posan2, posan3;
             ev3= (ep3 > pd3)-m3.GetVelocity();
             m3.SetTorque(2.1*(ev3 > pi3));
 
-//            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-//            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
-            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+//            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+//            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
         }
         usleep(dts*1000*1000);
@@ -135,12 +141,38 @@ double posan1, posan2, posan3;
 
     }
 
+
     if (onrobot)
     {
+        posan1=000;
+        posan2=-posan1/2;
+        posan3=-posan1/2;
+        for (double t=0;t<interval; t+=dts)
+        {
+
+                ep1=posan1-m1.GetPosition();
+                ev1= (ep1 > pd1)-m1.GetVelocity();
+                m1.SetTorque(ev1 > pi1);
+
+                ep2=posan2-m2.GetPosition();
+                ev2= (ep2 > pd2)-m2.GetVelocity();
+                m2.SetTorque(ev2 > pi2);
+
+                ep3=posan3-m3.GetPosition();
+                ev3= (ep3 > pd3)-m3.GetVelocity();
+                m3.SetTorque(2.1*(ev3 > pi3));
+
+
+
+            usleep(dts*1000*1000);
+
+        }
 
         m1.SetTorque(0);
         m2.SetTorque(0);
         m3.SetTorque(0);
+
+        sleep(1);
      }
 
 

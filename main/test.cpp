@@ -107,7 +107,7 @@ double posan1, posan2, posan3;
     pd2.SetSaturation(-30,30);
     pd3.SetSaturation(-30,30);
 
-    m1.SetTorque(1000);
+    m1.SetTorque(0);
     m2.SetTorque(0);
     m3.SetTorque(0);
 
