@@ -14,7 +14,7 @@
 
 main ()
 {
-    bool onrobot=false;
+    bool onrobot=true;
     //Controllers
     double dts=0.01;
 
@@ -34,11 +34,11 @@ main ()
     PIDBlock pi1(1,10,0,dts);
     SystemBlock pd1(npd,dpd,1);
 
-    //    SystemBlock pi1(npi,dpi,1);
+//        SystemBlock pi2(npi,dpi,1);
     PIDBlock pi2(1,10,0,dts);
     SystemBlock pd2(npd,dpd,1);
 
-    //    SystemBlock pi1(npi,dpi,1);
+//        SystemBlock pi3(npi,dpi,1);
     PIDBlock pi3(1,10,0,dts);
     SystemBlock pd3(npd,dpd,1);
 
@@ -88,9 +88,9 @@ main ()
 //    posan2=(0.1-lengths[1])*180/(0.01*M_PI);
 //    posan3=(0.1-lengths[2])*180/(0.01*M_PI);
 double posan1, posan2, posan3;
-    posan1=60;
-    posan2=-30;
-    posan3=-30;
+    posan1=20;
+    posan2=-posan1/2;
+    posan3=-posan1/2;
     cout << "pos1 " << posan1  << ", pos2 " << posan2 << ", pos3 " << posan3 <<endl;
 
 

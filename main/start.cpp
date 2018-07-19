@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     SocketCanPort p1("can0");
 
     ///Create a joint and give a canopen id, and a 301port (by constructor)
-    CiA402Device j1(3,&p1);
+    CiA402Device j1(1,&p1);
 
     ///Check the status of the device
     j1.PrintStatus();
@@ -33,11 +33,23 @@ int main(int argc, char *argv[])
     ///Check the status of the device
     j1.PrintStatus();
 
+
     SocketCanPort p2("can0");
+    CiA402Device j2(2,&p2);
+    j2.PrintStatus();
+    j2.StartNode();
+    j2.SwitchOn();
+    j2.OperationMode(od::positionmode);
+    j2.PrintStatus();
 
- CiA402Device j2(1,&p2);
- //j2.PrintStatus();
 
+    SocketCanPort p3("can0");
+    CiA402Device j3(3,&p1);
+    j3.PrintStatus();
+    j3.StartNode();
+    j3.SwitchOn();
+    j3.OperationMode(od::positionmode);
+    j3.PrintStatus();
 
     return 0;
 }
