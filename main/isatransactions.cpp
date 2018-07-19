@@ -26,17 +26,20 @@ main ()
 //    vector<double> npd ={-5310.6413 ,  33607.557 , -52182.099 ,  23885.413};
 //    vector<double> dpd ={0. ,  0.221738 , -1.1842456  , 1.};
 
-    //w30p70isom matlab
-    vector<double> npd ={1.7211  ,-18.2237 , -30.5996  , 31.8593 ,  45.4568};
-    vector<double> dpd ={ -0.1147   , 0.1057  ,  1.5008  ,  2.2802   , 1.0000};
+    //w100p70isom matlab
+    vector<double> npd ={22.4424 , 162.6018 , 522.6459 , 677.7843 , 296.1773};
+    vector<double> dpd ={ 0.4703  ,  2.3510  ,  4.2899  ,  3.4092  ,  1.0000};
 
-    SystemBlock pi1(npi,dpi,1);
+//    SystemBlock pi1(npi,dpi,1);
+    PIDBlock pi1(1,10,0,dts);
     SystemBlock pd1(npd,dpd,1);
 
-    SystemBlock pi2(npi,dpi,1);
+    //    SystemBlock pi1(npi,dpi,1);
+    PIDBlock pi2(1,10,0,dts);
     SystemBlock pd2(npd,dpd,1);
 
-    SystemBlock pi3(npi,dpi,1);
+    //    SystemBlock pi1(npi,dpi,1);
+    PIDBlock pi3(1,10,0,dts);
     SystemBlock pd3(npd,dpd,1);
 
 
