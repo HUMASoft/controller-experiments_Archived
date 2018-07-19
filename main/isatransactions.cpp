@@ -36,9 +36,10 @@ main ()
 //    vector<double> npd ={-5310.6413 ,  33607.557 , -52182.099 ,  23885.413};
 //    vector<double> dpd ={0. ,  0.221738 , -1.1842456  , 1.};
 
-//    //w20p65isom matlab
-//    vector<double> npd ={16.1209  , -8.1197  ,-92.0813 ,  74.6016  ,172.6901};
-//    vector<double> dpd ={  -0.1151   , 0.0179  ,  1.3106  ,  2.1779   , 1.0000};
+
+//    //w25p70isom matlab
+//    vector<double> npd ={26.9541, -116.1343, -295.1861,  174.1232,  361.7585};
+//    vector<double> dpd ={ -0.1453 ,  -0.1168 ,   1.1185 ,   2.0896 ,   1.0000};
 
     SystemBlock pi1(npi,dpi);
     SystemBlock pi3(npi,dpi);
