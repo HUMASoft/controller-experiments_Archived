@@ -19,9 +19,9 @@ main ()
     double dts=0.01;
 
 
-//    //fpd w=100 pm=80
-    vector<double> npd ={   33.3226,  143.5141,  347.1889,  451.1660 , 217.6672};
-    vector<double> dpd ={ 0.2520  ,  1.6080  ,  3.4552    ,3.0993   , 1.0000};
+////    //fpd w=100 pm=80
+//    vector<double> npd ={   33.3226,  143.5141,  347.1889,  451.1660 , 217.6672};
+//    vector<double> dpd ={ 0.2520  ,  1.6080  ,  3.4552    ,3.0993   , 1.0000};
 
 
     //fpi w=25 pm=70 //kept from last experiments.
@@ -37,9 +37,9 @@ main ()
 //    vector<double> dpd ={0. ,  0.221738 , -1.1842456  , 1.};
 
 
-//    //w25p70isom matlab
-//    vector<double> npd ={26.9541, -116.1343, -295.1861,  174.1232,  361.7585};
-//    vector<double> dpd ={ -0.1453 ,  -0.1168 ,   1.1185 ,   2.0896 ,   1.0000};
+    //w15p100isom matlab
+    vector<double> npd ={  -0.0849 , -18.2048 , -24.0183,   32.3824  , 40.6971};
+    vector<double> dpd ={ -0.1826  , -0.4825  ,  0.4194   , 1.7166  ,  1.0000};
 
     SystemBlock pi1(npi,dpi);
     SystemBlock pi3(npi,dpi);
