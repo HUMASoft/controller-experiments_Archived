@@ -87,7 +87,7 @@ main ()
 //    posan2=(0.1-lengths[1])*180/(0.01*M_PI);
 //    posan3=(0.1-lengths[2])*180/(0.01*M_PI);
 double posan1, posan2, posan3;
-    posan1=20;
+    posan1=30;
     posan2=-posan1/2;
     posan3=-posan1/2;
     cout << "pos1 " << posan1  << ", pos2 " << posan2 << ", pos3 " << posan3 <<endl;
