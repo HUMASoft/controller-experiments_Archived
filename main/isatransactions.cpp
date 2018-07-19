@@ -19,9 +19,9 @@ main ()
     double dts=0.01;
 
 
-    //fpd w=200 pm=70
-    vector<double> npd ={0.1237*100 ,   0.6847*100  ,  1.4257*100   , 1.3013*100  ,  0.4368*100};
-    vector<double> dpd ={0.6943  ,  3.0658  ,  5.0485  ,  3.6770  ,  1.0000};
+    //fpd w=100 pm=80
+    vector<double> npd ={   33.3226,  143.5141,  347.1889,  451.1660 , 217.6672};
+    vector<double> dpd ={ 0.2520  ,  1.6080  ,  3.4552    ,3.0993   , 1.0000};
 
 
     //fpi w=25 pm=70 //kept from last experiments.
@@ -47,9 +47,9 @@ main ()
 //    PIDBlock pi1(1,100,0,dts);
 //    PIDBlock pi2(1,100,0,dts);
 //    PIDBlock pi3(1,100,0,dts);
-//    PIDBlock pd1(265.88663,4092.238,0.6852634,dts);
-//    PIDBlock pd2(265.88663,4092.238,0.6852634,dts);
-//    PIDBlock pd3(265.88663,4092.238,0.6852634,dts);
+//    PIDBlock pd1(34.180445,25.521828,0.8734306,dts);
+//    PIDBlock pd2(34.180445,25.521828,0.8734306,dts);
+//    PIDBlock pd3(34.180445,25.521828,0.8734306,dts);
 
     SystemBlock pd1(npd,dpd,1);
     SystemBlock pd2(npd,dpd,1);
