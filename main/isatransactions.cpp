@@ -20,13 +20,17 @@ main ()
 
 
     //fpd w=200 pm=70
-    vector<double> npd ={0.1237 ,   0.6847  ,  1.4257   , 1.3013  ,  0.4368};
+    vector<double> npd ={0.1237*100 ,   0.6847*100  ,  1.4257*100   , 1.3013*100  ,  0.4368*100};
     vector<double> dpd ={0.6943  ,  3.0658  ,  5.0485  ,  3.6770  ,  1.0000};
 
 
     //fpi w=25 pm=70 //kept from last experiments.
     vector<double> npi ={0.3354  ,  0.3724  , -1.8968 ,  -0.5654  ,  1.9306};
     vector<double> dpi ={0.2381  ,  0.3986  , -1.0645  , -0.5716  ,  1.0000};
+
+//    //fpd w=25 pm=70
+//    vector<double> npd ={26.1251, -119.3468, -293.8182,  178.9746 , 361.7371};
+//    vector<double> dpd ={-0.1440 , -0.1031 , 1.1445 , 2.1032 , 1.0000};
 
 //    //w20p50isom scilab
 //    vector<double> npd ={-5310.6413 ,  33607.557 , -52182.099 ,  23885.413};
@@ -40,16 +44,16 @@ main ()
     SystemBlock pi3(npi,dpi,1);
     SystemBlock pi2(npi,dpi,1);
 
-//    PIDBlock pi1(10,100,0,dts);
-//    PIDBlock pi2(10,100,0,dts);
-//    PIDBlock pi3(10,100,0,dts);
-    PIDBlock pd1(265.88663,4092.238,0.6852634,dts);
-    PIDBlock pd2(265.88663,4092.238,0.6852634,dts);
-    PIDBlock pd3(265.88663,4092.238,0.6852634,dts);
+//    PIDBlock pi1(1,100,0,dts);
+//    PIDBlock pi2(1,100,0,dts);
+//    PIDBlock pi3(1,100,0,dts);
+//    PIDBlock pd1(265.88663,4092.238,0.6852634,dts);
+//    PIDBlock pd2(265.88663,4092.238,0.6852634,dts);
+//    PIDBlock pd3(265.88663,4092.238,0.6852634,dts);
 
-//    SystemBlock pd1(npd,dpd,1000);
-//    SystemBlock pd2(npd,dpd,1000);
-//    SystemBlock pd3(npd,dpd,1000);
+    SystemBlock pd1(npd,dpd,1);
+    SystemBlock pd2(npd,dpd,1);
+    SystemBlock pd3(npd,dpd,1);
 
 
 
@@ -96,7 +100,7 @@ main ()
 //    posan2=(0.1-lengths[1])*180/(0.01*M_PI);
 //    posan3=(0.1-lengths[2])*180/(0.01*M_PI);
 double posan1, posan2, posan3;
-    posan1=100;
+    posan1=50;
     posan2=-posan1/2;
     posan3=-posan1/2;
     cout << "pos1 " << posan1  << ", pos2 " << posan2 << ", pos3 " << posan3 <<endl;
@@ -110,9 +114,9 @@ double posan1, posan2, posan3;
 
     double interval=2; //in seconds
 
-    pd1.SetSaturation(-30,30);
-    pd2.SetSaturation(-30,30);
-    pd3.SetSaturation(-30,30);
+    pd1.SetSaturation(-100,100);
+    pd2.SetSaturation(-100,100);
+    pd3.SetSaturation(-100,100);
 
 
 
