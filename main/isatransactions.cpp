@@ -121,10 +121,10 @@ double posan1, posan2, posan3;
 
     double interval=2; //in seconds
 
-    double sats=80;
-    pd1.SetSaturation(-sats,sats);
-    pd2.SetSaturation(-sats*0.5,sats*0.5);
-    pd3.SetSaturation(-sats*0.5,sats*0.5);
+//    double sats=80;
+//    pd1.SetSaturation(-sats,sats);
+//    pd2.SetSaturation(-sats*0.5,sats*0.5);
+//    pd3.SetSaturation(-sats*0.5,sats*0.5);
 
 
 
