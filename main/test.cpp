@@ -1,5 +1,6 @@
 
 
+
 #include <iostream>
 #include <fstream>
 #include "Cia402device.h"
@@ -70,6 +71,7 @@ main ()
 //        m3.SwitchOn();
 //        sleep(1);
 
+
         m1.Setup_Torque_Mode();
         m2.Setup_Torque_Mode();
         m3.Setup_Torque_Mode();
@@ -105,23 +107,15 @@ double posan1, posan2, posan3;
     pd2.SetSaturation(-30,30);
     pd3.SetSaturation(-30,30);
 
-
+    m1.SetTorque(1000);
+    m2.SetTorque(0);
+    m3.SetTorque(0);
 
     for (double t=0;t<interval; t+=dts)
     {
         if (onrobot)
         {
-            ep1=posan1-m1.GetPosition();
-            ev1= (ep1 > pd1)-m1.GetVelocity();
-            m1.SetTorque(ev1 > pi1);
 
-            ep2=posan2-m2.GetPosition();
-            ev2= (ep2 > pd2)-m2.GetVelocity();
-            m2.SetTorque(ev2 > pi2);
-
-            ep3=posan3-m3.GetPosition();
-            ev3= (ep3 > pd3)-m3.GetVelocity();
-            m3.SetTorque(2.1*(ev3 > pi3));
 
 //            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
 //            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
