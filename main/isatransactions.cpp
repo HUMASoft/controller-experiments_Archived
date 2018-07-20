@@ -59,17 +59,14 @@ main ()
 //    PIDBlock pi3(1,100,0,dts);
 
 
-//    PIDBlock pd1(34.180445,25.521828,0.8734306,dts);
-//    PIDBlock pd2(34.180445,25.521828,0.8734306,dts);
-//    PIDBlock pd3(34.180445,25.521828,0.8734306,dts);
+    PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
+    PIDBlock pd2(8.6120054,10.826259,0.2030172,dts);
+    PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
 
-//    PIDBlock pd1(5,0,0,dts);
-//    PIDBlock pd2(5,0,0,dts);
-//    PIDBlock pd3(5,0,0,dts);
 
-    SystemBlock pd1(npd,dpd,1);
-    SystemBlock pd2(npd,dpd,1);
-    SystemBlock pd3(npd,dpd,1);
+//    SystemBlock pd1(npd,dpd,1);
+//    SystemBlock pd2(npd,dpd,1);
+//    SystemBlock pd3(npd,dpd,1);
 
 
 
