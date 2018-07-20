@@ -41,11 +41,6 @@ main ()
 //    vector<double> npd ={  -0.0849 , -18.2048 , -24.0183,   32.3824  , 40.6971};
 //    vector<double> dpd ={ -0.1826  , -0.4825  ,  0.4194   , 1.7166  ,  1.0000};
 
-<<<<<<< HEAD
-    //w10p80isom matlab //cant use derivative > 1!!!
-    vector<double> npd ={    9.4033 ,  61.7897 , -96.8906 ,-120.3604 , 177.9012};
-    vector<double> dpd ={  -0.1189 ,  -0.3611   , 0.4540  ,  1.7011   , 1.0000};
-=======
     //w10p80isom matlab
 //    vector<double> npd ={    9.4033 ,  61.7897 , -96.8906 ,-120.3604 , 177.9012};
 //    vector<double> dpd ={  -0.1189 ,  -0.3611   , 0.4540  ,  1.7011   , 1.0000};
@@ -53,7 +48,7 @@ main ()
     //w15p70isom fpi
     vector<double> npd ={    1.3804 ,   7.6892 , -10.3311 , -12.7163  , 13.9900};
     vector<double> dpd ={   0.0988  ,  0.5520  , -0.7381  , -0.9123  ,  1.0000};
->>>>>>> 7ebd31e4e19ae87d62d7238f398b33eda96ccd56
+
 
     SystemBlock pi1(npi,dpi);
     SystemBlock pi3(npi,dpi);
@@ -72,9 +67,9 @@ main ()
 //    PIDBlock pd2(5,0,0,dts);
 //    PIDBlock pd3(5,0,0,dts);
 
-    SystemBlock pd1(npd,dpd,1);
-    SystemBlock pd2(npd,dpd,1);
-    SystemBlock pd3(npd,dpd,1);
+    SystemBlock pd1(npd,dpd,0.5);
+    SystemBlock pd2(npd,dpd,0.5);
+    SystemBlock pd3(npd,dpd,0.5);
 
 
 
@@ -147,7 +142,7 @@ double posan1, posan2, posan3;
         if (onrobot)
         {
             ep1=posan1-m1.GetPosition();
-            ev1= (ep1 > pd1)-m1.GetVelocity();
+            ev1= (500)-m1.GetVelocity();
             m1.SetTorque((ev1 > pi1));
 
             ep2=posan2-m2.GetPosition();
@@ -158,10 +153,10 @@ double posan1, posan2, posan3;
             ev3= (ep3 > pd3)-m3.GetVelocity();
             m3.SetTorque(2.1*(ev3 > pi3));
 
-            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-//            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
-//            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+//            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+//            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
         }
         usleep(dts*1000*1000);
