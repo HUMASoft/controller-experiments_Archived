@@ -67,9 +67,9 @@ main ()
 //    PIDBlock pd2(5,0,0,dts);
 //    PIDBlock pd3(5,0,0,dts);
 
-    SystemBlock pd1(npd,dpd,0.5);
-    SystemBlock pd2(npd,dpd,0.5);
-    SystemBlock pd3(npd,dpd,0.5);
+    SystemBlock pd1(npd,dpd,1);
+    SystemBlock pd2(npd,dpd,1);
+    SystemBlock pd3(npd,dpd,1);
 
 
 
@@ -142,7 +142,7 @@ double posan1, posan2, posan3;
         if (onrobot)
         {
             ep1=posan1-m1.GetPosition();
-            ev1= (500)-m1.GetVelocity();
+            ev1= (ep1 > pd1)-m1.GetVelocity();
             m1.SetTorque((ev1 > pi1));
 
             ep2=posan2-m2.GetPosition();
@@ -153,10 +153,10 @@ double posan1, posan2, posan3;
             ev3= (ep3 > pd3)-m3.GetVelocity();
             m3.SetTorque(2.1*(ev3 > pi3));
 
-//            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-//            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
-            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+            responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+//            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+//            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
         }
         usleep(dts*1000*1000);
