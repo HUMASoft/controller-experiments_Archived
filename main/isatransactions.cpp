@@ -41,9 +41,19 @@ main ()
 //    vector<double> npd ={  -0.0849 , -18.2048 , -24.0183,   32.3824  , 40.6971};
 //    vector<double> dpd ={ -0.1826  , -0.4825  ,  0.4194   , 1.7166  ,  1.0000};
 
+<<<<<<< HEAD
     //w10p80isom matlab //cant use derivative > 1!!!
     vector<double> npd ={    9.4033 ,  61.7897 , -96.8906 ,-120.3604 , 177.9012};
     vector<double> dpd ={  -0.1189 ,  -0.3611   , 0.4540  ,  1.7011   , 1.0000};
+=======
+    //w10p80isom matlab
+//    vector<double> npd ={    9.4033 ,  61.7897 , -96.8906 ,-120.3604 , 177.9012};
+//    vector<double> dpd ={  -0.1189 ,  -0.3611   , 0.4540  ,  1.7011   , 1.0000};
+
+    //w15p70isom fpi
+    vector<double> npd ={    1.3804 ,   7.6892 , -10.3311 , -12.7163  , 13.9900};
+    vector<double> dpd ={   0.0988  ,  0.5520  , -0.7381  , -0.9123  ,  1.0000};
+>>>>>>> 7ebd31e4e19ae87d62d7238f398b33eda96ccd56
 
     SystemBlock pi1(npi,dpi);
     SystemBlock pi3(npi,dpi);
