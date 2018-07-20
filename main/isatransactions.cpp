@@ -45,9 +45,9 @@ main ()
 //    vector<double> npd ={    9.4033 ,  61.7897 , -96.8906 ,-120.3604 , 177.9012};
 //    vector<double> dpd ={  -0.1189 ,  -0.3611   , 0.4540  ,  1.7011   , 1.0000};
 
-    //w15p70isom fpi
-    vector<double> npd ={    1.3804 ,   7.6892 , -10.3311 , -12.7163  , 13.9900};
-    vector<double> dpd ={   0.0988  ,  0.5520  , -0.7381  , -0.9123  ,  1.0000};
+    //w12p60isom fpi
+    vector<double> npd ={       0.8390  ,  2.8895 ,  -5.7964 ,  -4.9372  ,  7.0497};
+    vector<double> dpd ={      0.1192 ,   0.4322  , -0.8161  , -0.7328  ,  1.0000};
 
 
     SystemBlock pi1(npi,dpi);
