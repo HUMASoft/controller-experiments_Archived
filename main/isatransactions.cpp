@@ -45,10 +45,17 @@ main ()
 //    vector<double> npd ={    9.4033 ,  61.7897 , -96.8906 ,-120.3604 , 177.9012};
 //    vector<double> dpd ={  -0.1189 ,  -0.3611   , 0.4540  ,  1.7011   , 1.0000};
 
-    //w12p60isom fpi
-    vector<double> npd ={        0.1903  ,  2.7145  , -3.0096  , -5.2954  ,  5.4174};
-    vector<double> dpd ={        0.0321  ,  0.5141 ,  -0.5422 ,  -1.0022 ,   1.0000};
+//    //w12p60isom fpi
+//    vector<double> npd ={        0.1903  ,  2.7145  , -3.0096  , -5.2954  ,  5.4174};
+//    vector<double> dpd ={        0.0321  ,  0.5141 ,  -0.5422 ,  -1.0022 ,   1.0000};
+    //or maybe:
+//    vector<double> npd ={0.0544  ,  1.0253  , -0.9935  , -1.9059   , 1.8320};
+//    vector<double> dpd ={0.0273  ,  0.6002 ,  -0.5238 ,  -1.1035  ,  1.0000};
 
+    //w12p60monjes fpi
+    //aproximation of s^-0.8: 5.3825451/(0.0022612 + 2.2612216*s)
+    vector<double> npd ={ 0.0539 ,   1.0203  , -0.9857 ,  -1.8960  ,  1.8194};
+    vector<double> dpd ={0.0273 ,   0.6002  , -0.5238  , -1.1035   , 1.0000};
 
     SystemBlock pi1(npi,dpi);
     SystemBlock pi3(npi,dpi);
@@ -59,14 +66,14 @@ main ()
 //    PIDBlock pi3(1,100,0,dts);
 
 
-    PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pd2(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pd2(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
 
 
-//    SystemBlock pd1(npd,dpd,1);
-//    SystemBlock pd2(npd,dpd,1);
-//    SystemBlock pd3(npd,dpd,1);
+    SystemBlock pd1(npd,dpd,1);
+    SystemBlock pd2(npd,dpd,1);
+    SystemBlock pd3(npd,dpd,1);
 
 
 
