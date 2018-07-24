@@ -29,7 +29,7 @@ main ()
     SystemBlock pi3(npi,dpi);
     SystemBlock pi2(npi,dpi);
 
-    string mass("/home/buyus/Escritorio/600g");
+    string mass("/home/buyus/Escritorio/0g");
 
 
 
@@ -66,8 +66,8 @@ main ()
 
 
     ofstream targets (mass+method+".targets.csv");
-    ofstream responses (mass+method+"0g_responses.csv");
-    ofstream controls (mass+method+"0g_controls.csv");
+    ofstream responses (mass+method+".responses.csv");
+    ofstream controls (mass+method+".controls.csv");
 
 
 
