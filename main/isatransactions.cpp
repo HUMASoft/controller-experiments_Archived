@@ -142,7 +142,7 @@ double posan1, posan2, posan3;
             ep2=posan2-m2.GetPosition();
             cs2=ep2 > pd2;
             ev2= cs2-m2.GetVelocity();
-            m2.SetTorque((ev2 > pi2));
+            m2.SetTorque(0.8*(ev2 > pi2));
 
             ep3=posan3-m3.GetPosition();
             cs3=ep3 > pd3;
