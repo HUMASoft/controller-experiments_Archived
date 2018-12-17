@@ -1,6 +1,6 @@
 #!/bin/bash
 #cd ..
-git submodule foreach git commit -am "Automatic Update" #Can use any automatic message
+git submodule foreach git commit -a#m "Automatic Update" #Can use any automatic message
 git commit -am "Automatic Update" #Can use any automatic message
 git push --recurse-submodules=on-demand
 #cd script
