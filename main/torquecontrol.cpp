@@ -14,7 +14,7 @@
 
 int main ()
 {
-    bool onrobot=true;
+    bool onrobot=false;
     //Controllers
     double dts=0.01;
 

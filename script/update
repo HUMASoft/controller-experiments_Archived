@@ -1,5 +1,5 @@
 #!/bin/bash
-#cd ..
+cd ..
 git pull
 git submodule foreach git pull
-#cd script
+cd script
