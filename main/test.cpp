@@ -13,7 +13,7 @@
 
 
 
-main ()
+int main ()
 {
     bool onrobot=true;
     //Controllers

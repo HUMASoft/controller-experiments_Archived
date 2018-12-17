@@ -12,7 +12,7 @@
 
 
 
-main ()
+int main ()
 {
     //Controllers
     double dts=0.01;
@@ -41,9 +41,9 @@ main ()
 
 
 
-    double ep1,ev1,cs1;
-    double ep2,ev2,cs2;
-    double ep3,ev3,cs3;
+//    double ep1,ev1,cs1;
+//    double ep2,ev2,cs2;
+//    double ep3,ev3,cs3;
 
     double interval=3; //in seconds
     double tor1=300;
@@ -73,7 +73,7 @@ main ()
         //            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
                     responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
-        usleep(dts*1000*1000);
+        usleep(uint(dts*1000*1000));
         // cout << t << " , " << posan1  << " , " << posan2 << " , " << posan3 << endl;
 
     }

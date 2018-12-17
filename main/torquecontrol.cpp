@@ -14,65 +14,32 @@
 
 int main ()
 {
-    bool onrobot=true;
+    bool onrobot=false;
     //Controllers
     double dts=0.01;
 
+    string location("/home/humasoft/Escritorio/");
 
 
+    string method("o2isom");
     //fpi w=25 pm=70 //kept from last experiments.
-    vector<double> npi ={-0.2905,    1.1836 ,  -1.5196 ,   0.6267};
-    vector<double> dpi ={-0.9411,    2.8818 ,  -2.9407   , 1.0000};
+    vector<double> npi ={2.5712 , -21.9948  , -7.5175 ,  29.4688};
+    vector<double> dpi ={-0.2557 ,   0.0614 ,   1.3171  ,  1.0000};
 
 
-//    SystemBlock pi1(npi,dpi);
-//    SystemBlock pi3(npi,dpi);
-//    SystemBlock pi2(npi,dpi);
+    SystemBlock pi1(npi,dpi);
+    SystemBlock pi3(npi,dpi);
+    SystemBlock pi2(npi,dpi);
 //    pi2.SetSaturation(-700,700);
     //string method("w12p60pid");
-    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pi2(0.165,21.15,0,dts);
-    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
-
-    string mass("/home/humasoft/Escritorio/");
+//    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pi2(0.165,21.15,0,dts);
+//    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
 
 
-
-    //w12p60isom fpi
-
-//    string method("w12p60isom");
-//    vector<double> npd ={0.1903  ,  2.7145  , -3.0096  , -5.2954  ,  5.4174};
-//    vector<double> dpd ={0.0321  ,  0.5141 ,  -0.5422 ,  -1.0022 ,   1.0000};
-//    SystemBlock pd1(npd,dpd,1);
-//    SystemBlock pd2(npd,dpd,1);
-//    SystemBlock pd3(npd,dpd,1);
-
-
-
-//    w12p60monje fpi
-
-    string method("w12p60monje");
-    vector<double> npd ={-41.8156,  226.0708, -488.6249,  527.7509, -284.8347,   61.4535};
-    vector<double> dpd ={0.6126,   -2.1962,    1.9705,    1.1962 ,  -2.5831 ,   1.0000};
-//    SystemBlock pd1(npd,dpd,1);
-//    SystemBlock pd2(npd,dpd,1);
-//    SystemBlock pd3(npd,dpd,1);
-   // pd1.SetSaturation(-200,200)
-
-
-
-//    //w12p60pid
-
-   //string method("w12p60pid");
-    PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pd2(21.65,0,1.9,dts);
-    PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
-
-
-
-    ofstream targets (mass+method+".targets.csv");
-    ofstream responses (mass+method+".responses.csv");
-    ofstream controls (mass+method+".controls.csv");
+    ofstream targets (location+method+".targets.csv");
+    ofstream responses (location+method+".responses.csv");
+    ofstream controls (location+method+".controls.csv");
 
 
 
@@ -120,11 +87,11 @@ double posan1, posan2, posan3;
     posan3=-posan1/2;
     cout << "pos1 " << posan1  << ", pos2 " << posan2 << ", pos3 " << posan3 <<endl;
 
+    IPlot pl1(dts);
 
-
-    double ep1,ev1,cs1;
-    double ep2,ev2,cs2;
-    double ep3,ev3,cs3;
+    double ep1,cs1;
+    double ep2,cs2;
+    double ep3,cs3;
 
     double interval=2; //in seconds
 
@@ -140,23 +107,20 @@ double posan1, posan2, posan3;
         if (onrobot)
         {
             ep1=posan1-m1.GetPosition();
-            cs1=ep1 > pd1;
-            ev1= cs1-m1.GetVelocity();
-            m1.SetTorque((ev1 > pi1));
+            m1.SetTorque((ep1 > pi1));
 
             ep2=posan2-m2.GetPosition();
-            cs2=ep2 > pd2;
-            ev2= cs2-m2.GetVelocity();
-            m2.SetTorque(0.8*(ev2 > pi2));
+            m2.SetTorque(ep2 > pi2);
 
             ep3=posan3-m3.GetPosition();
-            cs3=ep3 > pd3;
-            ev3= cs3-m3.GetVelocity();
-            m3.SetTorque(2.1*(ev3 > pi3));
+            m3.SetTorque(ep3 > pi3);
+
+            pl1.pushBack(m1.GetPosition());
 
           //  cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-            controls << t << " , " << cs1 << " , " << cs2 <<  " , " << cs3 <<endl;
+//            controls << t << " , " << cs1 << " , " << cs2 <<  " , " << cs3 <<endl;
             responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+
 
 //            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 //            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
@@ -177,19 +141,14 @@ double posan1, posan2, posan3;
         for (double t=0;t<interval; t+=dts)
         {
 
-                ep1=posan1-m1.GetPosition();
-                ev1= (ep1 > pd1)-m1.GetVelocity();
-                m1.SetTorque(ev1 > pi1);
+            ep1=posan1-m1.GetPosition();
+            m1.SetTorque((ep1 > pi1));
 
-                ep2=posan2-m2.GetPosition();
-                ev2= (ep2 > pd2)-m2.GetVelocity();
-                m2.SetTorque(ev2 > pi2);
+            ep2=posan2-m2.GetPosition();
+            m2.SetTorque(ep2 > pi2);
 
-                ep3=posan3-m3.GetPosition();
-                ev3= (ep3 > pd3)-m3.GetVelocity();
-                m3.SetTorque(2.1*(ev3 > pi3));
-
-
+            ep3=posan3-m3.GetPosition();
+            m3.SetTorque(ep3 > pi3);
 
             usleep(uint(dts*1000*1000));
 
@@ -200,10 +159,13 @@ double posan1, posan2, posan3;
         m3.SetTorque(0);
 
         sleep(1);
+
      }
-targets.close();
-controls.close();
-responses.close();
+
+//    pl1.Plot();//needs model
+    targets.close();
+    controls.close();
+    responses.close();
 
 return 0;
 
