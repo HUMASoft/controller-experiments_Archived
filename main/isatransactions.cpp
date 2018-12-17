@@ -21,15 +21,20 @@ main ()
 
 
     //fpi w=25 pm=70 //kept from last experiments.
-    vector<double> npi ={0.3354  ,  0.3724  , -1.8968 ,  -0.5654  ,  1.9306};
-    vector<double> dpi ={0.2381  ,  0.3986  , -1.0645  , -0.5716  ,  1.0000};
+    vector<double> npi ={-0.2905,    1.1836 ,  -1.5196 ,   0.6267};
+    vector<double> dpi ={-0.9411,    2.8818 ,  -2.9407   , 1.0000};
 
 
-    SystemBlock pi1(npi,dpi);
-    SystemBlock pi3(npi,dpi);
-    SystemBlock pi2(npi,dpi);
+//    SystemBlock pi1(npi,dpi);
+//    SystemBlock pi3(npi,dpi);
+//    SystemBlock pi2(npi,dpi);
+//    pi2.SetSaturation(-700,700);
+    //string method("w12p60pid");
+    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
+    PIDBlock pi2(0.165,21.15,0,dts);
+    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
 
-    string mass("/home/buyus/Escritorio/0g");
+    string mass("/home/humasoft/Escritorio/");
 
 
 
@@ -46,21 +51,21 @@ main ()
 
 //    w12p60monje fpi
 
-//    string method("w12p60monje");
-//    vector<double> npd ={0.1903  ,  2.7145  , -3.0096  , -5.2854  ,  5.3974};
-//    vector<double> dpd ={0.0321  ,  0.5141 ,  -0.5422 ,  -1.0022 ,   1.0000};
+    string method("w12p60monje");
+    vector<double> npd ={-41.8156,  226.0708, -488.6249,  527.7509, -284.8347,   61.4535};
+    vector<double> dpd ={0.6126,   -2.1962,    1.9705,    1.1962 ,  -2.5831 ,   1.0000};
 //    SystemBlock pd1(npd,dpd,1);
 //    SystemBlock pd2(npd,dpd,1);
 //    SystemBlock pd3(npd,dpd,1);
-
+   // pd1.SetSaturation(-200,200)
 
 
 
 //    //w12p60pid
 
-    string method("w12p60pid");
+   //string method("w12p60pid");
     PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pd2(8.6120054,10.826259,0.2030172,dts);
+    PIDBlock pd2(21.65,0,1.9,dts);
     PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
 
 
