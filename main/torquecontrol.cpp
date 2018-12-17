@@ -14,7 +14,7 @@
 
 int main ()
 {
-    bool onrobot=false;
+    bool onrobot=true;
     //Controllers
     double dts=0.01;
 
@@ -27,9 +27,9 @@ int main ()
     vector<double> dpi ={-0.2557 ,   0.0614 ,   1.3171  ,  1.0000};
 
 
-    SystemBlock pi1(npi,dpi);
-    SystemBlock pi3(npi,dpi);
-    SystemBlock pi2(npi,dpi);
+    SystemBlock pi1(npi,dpi,10);
+    SystemBlock pi3(npi,dpi,10);
+    SystemBlock pi2(npi,dpi,10);
 //    pi2.SetSaturation(-700,700);
     //string method("w12p60pid");
 //    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
@@ -43,11 +43,11 @@ int main ()
 
 
 
-        SocketCanPort pm1("can0");
+        SocketCanPort pm1("can1");
         CiA402Device m1 (1, &pm1);
-        SocketCanPort pm2("can0");
+        SocketCanPort pm2("can1");
         CiA402Device m2 (2, &pm2);
-        SocketCanPort pm3("can0");
+        SocketCanPort pm3("can1");
         CiA402Device m3 (3, &pm3);
 
         if (onrobot)
