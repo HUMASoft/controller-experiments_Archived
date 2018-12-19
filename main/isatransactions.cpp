@@ -20,53 +20,55 @@ int main ()
 
 
 
-    //fpi w=25 pm=70 //kept from last experiments.
-    vector<double> npi ={-0.2905,    1.1836 ,  -1.5196 ,   0.6267};
-    vector<double> dpi ={-0.9411,    2.8818 ,  -2.9407   , 1.0000};
+//    //fpi w=25 pm=70 //kept from last experiments.
+//    vector<double> npi ={-0.2905,    1.1836 ,  -1.5196 ,   0.6267};
+//    vector<double> dpi ={-0.9411,    2.8818 ,  -2.9407   , 1.0000};
+//    //fpi w=50 pm=60 //New motors
+//    vector<double> npi ={1.0220  , -2.4898 ,  -0.7596 ,   2.3089};
+//    vector<double> dpi ={0.7987 ,  -0.9983 ,  -0.7970  ,  1.0000};
+    //fpi w=50 pm=60 //New motors
+    vector<double> npi ={0.2916 ,  -5.3981 ,   0.2415  ,  5.5243};
+    vector<double> dpi ={0.2916 ,  -5.3981  ,  0.2415  ,  5.5243};
 
-
-//    SystemBlock pi1(npi,dpi);
-//    SystemBlock pi3(npi,dpi);
-//    SystemBlock pi2(npi,dpi);
+    SystemBlock pi1(npi,dpi);
+    SystemBlock pi3(npi,dpi);
+    SystemBlock pi2(npi,dpi);
 //    pi2.SetSaturation(-700,700);
-    //string method("w12p60pid");
-    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pi2(0.165,21.15,0,dts);
-    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
+
+
+//    //string method("w12p60pid");
+//    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pi2(0.165,21.15,0,dts);
+//    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
 
     string mass("/home/humasoft/Escritorio/");
 
 
 
-    //w12p60isom fpi
 
 //    string method("w12p60isom");
 //    vector<double> npd ={0.1903  ,  2.7145  , -3.0096  , -5.2954  ,  5.4174};
 //    vector<double> dpd ={0.0321  ,  0.5141 ,  -0.5422 ,  -1.0022 ,   1.0000};
-//    SystemBlock pd1(npd,dpd,1);
-//    SystemBlock pd2(npd,dpd,1);
-//    SystemBlock pd3(npd,dpd,1);
+//    string method("w12p60monje");
+//    vector<double> npd ={-41.8156,  226.0708, -488.6249,  527.7509, -284.8347,   61.4535};
+//    vector<double> dpd ={0.6126,   -2.1962,    1.9705,    1.1962 ,  -2.5831 ,   1.0000};
+    string method("2isomw10p100");
+    vector<double> npd ={0.7178 ,  -2.0893 ,  -1.3030  ,  2.9270};
+    vector<double> dpd ={0.0337 ,  -0.9032  ,  0.0631  ,  1.0000};
 
-
-
-//    w12p60monje fpi
-
-    string method("w12p60monje");
-    vector<double> npd ={-41.8156,  226.0708, -488.6249,  527.7509, -284.8347,   61.4535};
-    vector<double> dpd ={0.6126,   -2.1962,    1.9705,    1.1962 ,  -2.5831 ,   1.0000};
-//    SystemBlock pd1(npd,dpd,1);
-//    SystemBlock pd2(npd,dpd,1);
-//    SystemBlock pd3(npd,dpd,1);
+    SystemBlock pd1(npd,dpd,1);
+    SystemBlock pd2(npd,dpd,1);
+    SystemBlock pd3(npd,dpd,1);
    // pd1.SetSaturation(-200,200)
 
 
 
 //    //w12p60pid
 
-   //string method("w12p60pid");
-    PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pd2(21.65,0,1.9,dts);
-    PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
+//   //string method("w12p60pid");
+//    PIDBlock pd1(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pd2(21.65,0,1.9,dts);
+//    PIDBlock pd3(8.6120054,10.826259,0.2030172,dts);
 
 
 
@@ -76,11 +78,11 @@ int main ()
 
 
 
-        SocketCanPort pm1("can0");
+        SocketCanPort pm1("can1");
         CiA402Device m1 (1, &pm1);
-        SocketCanPort pm2("can0");
+        SocketCanPort pm2("can1");
         CiA402Device m2 (2, &pm2);
-        SocketCanPort pm3("can0");
+        SocketCanPort pm3("can1");
         CiA402Device m3 (3, &pm3);
 
         if (onrobot)
