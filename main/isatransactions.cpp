@@ -28,7 +28,7 @@ int main ()
 //    vector<double> dpi ={0.7987 ,  -0.9983 ,  -0.7970  ,  1.0000};
     //fpi w=50 pm=60 //New motors
     vector<double> npi ={0.2916 ,  -5.3981 ,   0.2415  ,  5.5243};
-    vector<double> dpi ={0.2916 ,  -5.3981  ,  0.2415  ,  5.5243};
+    vector<double> dpi ={0.5882 ,  -0.9921 ,  -0.5804  ,  1.0000};
 
     SystemBlock pi1(npi,dpi);
     SystemBlock pi3(npi,dpi);
