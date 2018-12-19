@@ -144,7 +144,6 @@ double posan1, posan2, posan3;
             ep1=posan1-m1.GetPosition();
             cs1=ep1 > pd1;
             ev1= cs1-m1.GetVelocity();
-            ev1=100;
             m1.SetTorque((ev1 > pi1));
 
             ep2=posan2-m2.GetPosition();
@@ -157,7 +156,7 @@ double posan1, posan2, posan3;
             ev3= cs3-m3.GetVelocity();
             m3.SetTorque((ev3 > pi3));
 
-          //  cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
+            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
             controls << t << " , " << cs1 << " , " << cs2 <<  " , " << cs3 <<endl;
             responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
 

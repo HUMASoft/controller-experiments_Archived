@@ -28,18 +28,18 @@ int main ()
 //    vector<double> dpi ={0.7987 ,  -0.9983 ,  -0.7970  ,  1.0000};
     //fpi w=50 pm=60 //New motors
     vector<double> npi ={0.2916 ,  -5.3981 ,   0.2415  ,  5.5243};
-    vector<double> dpi ={0.2916 ,  -5.3981  ,  0.2415  ,  5.5243};
+    vector<double> dpi ={0.5882 ,  -0.9921 ,  -0.5804  ,  1.0000};
 
-//    SystemBlock pi1(npi,dpi);
-//    SystemBlock pi3(npi,dpi);
-//    SystemBlock pi2(npi,dpi);
+    SystemBlock pi1(npi,dpi);
+    SystemBlock pi3(npi,dpi);
+    SystemBlock pi2(npi,dpi);
 //    pi2.SetSaturation(-700,700);
 
 
 //    //string method("w12p60pid");
-    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
-    PIDBlock pi2(0.165,21.15,0,dts);
-    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pi1(8.6120054,10.826259,0.2030172,dts);
+//    PIDBlock pi2(0.165,21.15,0,dts);
+//    PIDBlock pi3(8.6120054,10.826259,0.2030172,dts);
 
     string mass("/home/humasoft/Escritorio/");
 
@@ -109,8 +109,8 @@ int main ()
 
 
     double tg1=50,ev1,cs1;
-    double tg2=0,ev2,cs2;
-    double tg3=0,ev3,cs3;
+    double tg2=50,ev2,cs2;
+    double tg3=50,ev3,cs3;
 
     double interval=2; //in seconds
 
@@ -128,16 +128,16 @@ int main ()
             cs1=pi1.OutputUpdate(ev1);
             m1.SetTorque(cs1);
 
-            ev2= cs2-m2.GetVelocity();
+            ev2= tg2-m2.GetVelocity();
             m2.SetTorque((ev2 > pi2));
 
-            ev3= cs3-m3.GetVelocity();
+            ev3= tg3-m3.GetVelocity();
             m3.SetTorque((ev3 > pi3));
 
 //            cout << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
-            cout << t << " , " << cs1 << " , " << cs2 <<  " , " << cs3 <<endl;
+//            cout << t << " , " << cs1 << " , " << cs2 <<  " , " << cs3 <<endl;
 //            cout << t << " , " << ev1 << " , " << ev2 <<  " , " << ev3 <<endl;
-//            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
+            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
             controls << t << " , " << cs1 << " , " << cs2 <<  " , " << cs3 <<endl;
             responses << t << " , " << m1.GetPosition() << " , " << m2.GetPosition() <<  " , " << m3.GetPosition() <<endl;
