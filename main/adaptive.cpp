@@ -17,8 +17,8 @@ int main ()
 {
     ToolsFControl tools;
     tools.SetSamplingTime(0.01);
-    OnlineSystemIdentification model(1,2);
-    vector<double> num(1),den(2);
+    OnlineSystemIdentification model(1,1);
+    vector<double> num(1),den(1);
 
     //Controllers
     double dts=0.01;
@@ -37,7 +37,7 @@ int main ()
     CiA402Device m1 (31, &pm31, &sd31);
     m1.StartNode();
     m1.SwitchOn();
-    PIDBlock c1(1.5,0.7,0,dts);
+    PIDBlock c1(0.5,1,0,dts);
 
     SocketCanPort pm2("can1");
     CiA402Device m2 (32, &pm2);
@@ -55,24 +55,31 @@ int main ()
 
 
     double ep1,ev1,cs1;
-    double tp1,tv1;
+    double tp1,tv1,v1;
     double ep2,ev2,cs2;
     double ep3,ev3,cs3;
 
-    m1.Setup_Torque_Mode();
-    tv1=0.5;
+//    m1.Setup_Torque_Mode();
+//    tv1=2;
 
-    double interval=6; //in seconds
+    m1.Setup_Velocity_Mode(1,1);
+    tp1=1;
+
+    double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
-        ev1=tv1-m1.GetVelocity();
-        cs1= ev1 > c1;
-        cs1=cs1/10000;
-        m1.SetTorque(cs1);
+//        tv1=1*(rand() % 10 + 1)-5;
+//        ev1=tv1-m1.GetVelocity();
+//        cs1= ep1 > c1;
+//        cs1=cs1/10000;
 
-        model.UpdateSystem( cs1,m1.GetVelocity() );
-        model.GetZTransferFunction(num,den);
+        ep1=tp1-m1.GetPosition();
+        cs1= ep1 > c1;
+        m1.SetVelocity(cs1);
+
+        model.UpdateSystem( cs1,m1.GetPosition() );
+//        model.GetZTransferFunction(num,den);
         model.PrintZTransferFunction(dts);
 
 

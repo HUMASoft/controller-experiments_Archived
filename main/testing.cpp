@@ -1,54 +1,47 @@
 
 
-
 #include <iostream>
 #include <fstream>
-
-#include "FractionalDerivative.h"
-#include "FractionalController1DOF.h"
+#include "Cia402device.h"
+#include "CiA301CommPort.h"
+#include "SocketCanPort.h"
+#include "math.h"
 
 #include "fcontrol.h"
 #include "IPlot.h"
-#include "OnlineSystemIdentification.h"
 
+#include "OnlineSystemIdentification.h"
 
 
 int main ()
 {
+    ToolsFControl tools;
+    tools.SetSamplingTime(0.01);
 
-    OnlineSystemIdentification id(1,2);
 
-    //FractionalController1DOF fd(1,0.01);
-    int N=100;
+    //Controllers
     double dts=0.01;
-    vector<double> in(N,0),out(N,0);
 
-    for (int i=0; i<N; i++)
-    {
-        in[i]=1;
-        out[i]=dts;
-//        cout << in[i] << ", ";
-        id.UpdateSystem(in[i],out[i]);
-        cout << id.PrintZTransferFunction(dts) << endl;
-        //cout << id.PrintParamsVector() << endl;
-    }
 
-    for (int i=0; i<N; i++)
-    {
-        in[i]=1;
-        out[i]=1;
-//        cout << in[i] << ", ";
-        id.UpdateSystem(in[i],out[i]);
-        cout << id.PrintZTransferFunction(dts) << endl;
-        //cout << id.PrintParamsVector() << endl;
-    }
+    SocketCanPort pm31("can1");
+    CiA402SetupData sd31(2048,24,0.001, 0.144);
+    CiA402Device m1 (31, &pm31, &sd31);
+    m1.StartNode();
+    m1.SwitchOn();
 
-    for (int i=0; i<N; i++)
-    {
-//        out[i]=fd.OutputUpdate(in[i]);
-//        cout << out[i] << ", ";
+//    m1.Setup_Torque_Mode();
+//    tv1=2;
 
-    }
+    m1.Setup_Velocity_Mode(0,1);
+    m1.SetVelocity(1);
+    sleep(4);
+    m1.SetVelocity(0);
+//    m1.SetupPositionMode(1,1);
+//    m1.SetPosition(0);
+//    sleep(4);
 
+
+
+return 0;
 
 }
