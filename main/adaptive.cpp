@@ -63,7 +63,7 @@ int main ()
 //    tv1=2;
 
     m1.Setup_Velocity_Mode(1,1);
-    tp1=1;
+    tp1=3;
 
     double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
@@ -76,6 +76,7 @@ int main ()
 
         ep1=tp1-m1.GetPosition();
         cs1= ep1 > c1;
+        cs1=cs1+0.1*((rand() % 10 + 1)-5);
         m1.SetVelocity(cs1);
 
         model.UpdateSystem( cs1,m1.GetPosition() );

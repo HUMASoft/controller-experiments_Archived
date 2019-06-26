@@ -44,6 +44,7 @@ int main ()
     SocketCanPort pm3("can1");
     CiA402Device m3 (33, &pm3);
 
+    IPlot p1;
 
 
     double posan1, posan2, posan3;
@@ -63,20 +64,25 @@ int main ()
 //    tv1=2;
 
     m1.Setup_Velocity_Mode();
+//    m1.SetupPositionMode();
+//    m1.Setup_Torque_Mode();
 
 
 
 
-    double interval=20; //in seconds
+    double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tv1=1*(rand() % 10 + 1)-5;
+        tv1=1;//-0.01*((rand() % 10 + 1)-5);
 
-        cout << "tv1 " << tv1   <<endl;
+//        cout << "tv1 " << tv1;
         m1.SetVelocity(tv1);
+        model.UpdateSystem( tv1,m1.GetVelocity() );
 
-
-        model.UpdateSystem( tv1,m1.GetPosition() );
+        p1.pushBack(m1.GetVelocity());
+//        tv1=tv1/10000;
+//        m1.SetTorque(tv1);
+//        model.UpdateSystem( tv1,m1.GetVelocity() );
         //        model.GetZTransferFunction(num,den);
         model.PrintZTransferFunction(dts);
 
@@ -86,11 +92,13 @@ int main ()
     }
 
 
-    m1.SetupPositionMode(1,1);
+    m1.SetupPositionMode();
 
     m1.SetPosition(0);
 
     sleep(4);
+
+    p1.Plot();
 
 targets.close();
 controls.close();
