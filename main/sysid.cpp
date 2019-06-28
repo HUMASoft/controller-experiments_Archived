@@ -24,6 +24,24 @@ int main ()
     double dts=0.01;
 
 
+    //tau = 0.1
+//    0.09516
+//   ----------
+//   z - 0.9048
+//    SystemBlock filter(0.09516,0,- 0.9048,1);
+
+
+    //Tau=0.5
+//    0.0198
+//  ----------
+//  z - 0.9802
+//    SystemBlock filter(0.0198,0,- 0.9802,1);
+
+//    0.1813
+//  ----------
+//  z - 0.8187
+    SystemBlock filter(0.1813,0,- 0.8187,1);
+
     string folder="~/Escritorio";
 
     ofstream targets (folder+".targets.csv");
@@ -73,13 +91,15 @@ int main ()
     double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tv1=1;//-0.01*((rand() % 10 + 1)-5);
+        tv1=1-0.01*((rand() % 10 + 1)-5);
 
 //        cout << "tv1 " << tv1;
         m1.SetVelocity(tv1);
-        model.UpdateSystem( tv1,m1.GetVelocity() );
 
-        p1.pushBack(m1.GetVelocity());
+        v1 = m1.GetVelocity() > filter;
+        model.UpdateSystem( tv1, v1 );
+
+        p1.pushBack(v1);
 //        tv1=tv1/10000;
 //        m1.SetTorque(tv1);
 //        model.UpdateSystem( tv1,m1.GetVelocity() );

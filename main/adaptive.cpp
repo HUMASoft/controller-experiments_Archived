@@ -24,6 +24,24 @@ int main ()
     double dts=0.01;
 
 
+    //tau = 0.1
+//    0.09516
+//   ----------
+//   z - 0.9048
+//    SystemBlock filter(0.09516,0,- 0.9048,1);
+
+
+    //Tau=0.5
+//    0.0198
+//  ----------
+//  z - 0.9802
+//    SystemBlock filter(0.0198,0,- 0.9802,1);
+
+//    0.1813
+//  ----------
+//  z - 0.8187
+    SystemBlock filter(0.1813,0,- 0.8187,1);
+
     string folder="~/Escritorio";
 
     ofstream targets (folder+".targets.csv");
@@ -62,22 +80,21 @@ int main ()
 //    m1.Setup_Torque_Mode();
 //    tv1=2;
 
-    m1.Setup_Velocity_Mode(1,1);
+    m1.Setup_Velocity_Mode();
     tp1=3;
 
     double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
-//        tv1=1*(rand() % 10 + 1)-5;
-//        ev1=tv1-m1.GetVelocity();
+
+        tv1=1;//*(rand() % 10 + 1)-5;
+//        ev1=tv1- (m1.GetVelocity() > filter);
 //        cs1= ep1 > c1;
 //        cs1=cs1/10000;
 
-        ep1=tp1-m1.GetPosition();
-        cs1= ep1 > c1;
-        cs1=cs1+0.1*((rand() % 10 + 1)-5);
-        m1.SetVelocity(cs1);
+
+        v1=m1.GetVelocity() > filter;
 
         model.UpdateSystem( cs1,m1.GetPosition() );
 //        model.GetZTransferFunction(num,den);
@@ -92,12 +109,28 @@ int main ()
         //            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
         //            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
-        //usleep(uint(dts*1000*1000));
         tools.WaitSamplingTime();
-        // cout << t << " , " << posan1  << " , " << posan2 << " , " << posan3 << endl;
-        targets << t << " , " << posan1  << " , " << posan2 << " , " << posan3 << endl;
+
 
     }
+
+//    double interval=5; //in seconds
+//    for (double t=0;t<interval; t+=dts)
+//    {
+
+//        ep1=tp1-m1.GetPosition();
+//        cs1= ep1 > c1;
+//        cs1=cs1+0.1*((rand() % 10 + 1)-5);
+//        m1.SetVelocity(cs1);
+
+
+//        model.UpdateSystem( cs1,m1.GetPosition() );
+////        model.GetZTransferFunction(num,den);
+//        model.PrintZTransferFunction(dts);
+
+//        tools.WaitSamplingTime();
+
+//    }
 
     m1.SetupPositionMode(1,1);
 
