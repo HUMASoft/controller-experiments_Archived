@@ -17,8 +17,10 @@ int main ()
 {
     ToolsFControl tools;
     tools.SetSamplingTime(0.01);
-    OnlineSystemIdentification model(1,1);
-    vector<double> num(1),den(1);
+    int numOrder=1,denOrder=1;
+
+    OnlineSystemIdentification model(numOrder,denOrder);
+//    vector<double> num(1),den(1);
 
     //Controllers
     double dts=0.01;
@@ -28,7 +30,7 @@ int main ()
 //    0.09516
 //   ----------
 //   z - 0.9048
-//    SystemBlock filter(0.09516,0,- 0.9048,1);
+    SystemBlock filter(0.09516,0,- 0.9048,1);
 
 
     //Tau=0.5
@@ -37,10 +39,26 @@ int main ()
 //  z - 0.9802
 //    SystemBlock filter(0.0198,0,- 0.9802,1);
 
+    //Tau=?
 //    0.1813
 //  ----------
 //  z - 0.8187
-    SystemBlock filter(0.1813,0,- 0.8187,1);
+//    SystemBlock filter(0.1813,0,- 0.8187,1);
+//        SystemBlock filter(0,1,0,1);
+
+
+
+    //passband
+//    ans =
+//       -0.0813         0    0.0813
+//    ans =
+//        0.8374   -1.8365    1.0000
+//    SystemBlock filter(vector<double> {-0.0813   ,      0 ,   0.0813},
+//                       vector<double> {0.8374  , -1.8365  ,  1.0000});
+
+
+//    SystemBlock filterInput(filter);
+
 
     string folder="~/Escritorio";
 
@@ -55,7 +73,7 @@ int main ()
     CiA402Device m1 (31, &pm31, &sd31);
     m1.StartNode();
     m1.SwitchOn();
-    PIDBlock c1(0.5,1,0,dts);
+    PIDBlock c1(2,0.5,0,dts);
 
     SocketCanPort pm2("can1");
     CiA402Device m2 (32, &pm2);
@@ -70,6 +88,7 @@ int main ()
     posan3=-posan1/2;
     cout << "pos1 " << posan1  << ", pos2 " << posan2 << ", pos3 " << posan3 <<endl;
 
+    IPlot p1,id;
 
 
     double ep1,ev1,cs1;
@@ -81,22 +100,27 @@ int main ()
 //    tv1=2;
 
     m1.Setup_Velocity_Mode();
-    tp1=3;
 
-    double interval=5; //in seconds
+    double input;
+
+    double interval=4; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
+        tp1=3;
 
-        tv1=1;//*(rand() % 10 + 1)-5;
-//        ev1=tv1- (m1.GetVelocity() > filter);
-//        cs1= ep1 > c1;
+        ep1=tp1- m1.GetPosition();
+        cs1= ep1 > c1;
 //        cs1=cs1/10000;
 
+//        cout << tp1 << endl;
+        cs1=cs1-0.1*((rand() % 10 + 1)-5);
+        m1.SetVelocity(cs1);
+        v1 = (m1.GetVelocity() > filter);
+        model.UpdateSystem(cs1 ,v1 );
 
-        v1=m1.GetVelocity() > filter;
+        p1.pushBack(cs1 - v1);
 
-        model.UpdateSystem( cs1,m1.GetPosition() );
 //        model.GetZTransferFunction(num,den);
         model.PrintZTransferFunction(dts);
 
@@ -132,11 +156,33 @@ int main ()
 
 //    }
 
-    m1.SetupPositionMode(1,1);
+    vector<double> num(numOrder+1),den(denOrder+1);
+    model.GetZTransferFunction(num,den);
+    cout << num[1] << endl;
+    SystemBlock idsys(num,den);
 
+    for (double t=0; t<10; t+=dts)
+
+    {
+
+        id.pushBack( 1 > idsys );
+        //Gz.PrintZTransferFunction(dts);
+        //Gz.PrintParamsVector();
+
+    }
+
+    model.PrintZTransferFunction(dts);
+
+
+    p1.Plot();
+    id.Plot();
+
+
+    m1.SetupPositionMode();
     m1.SetPosition(0);
 
-    sleep(4);
+    sleep(tp1);
+
 
 targets.close();
 controls.close();

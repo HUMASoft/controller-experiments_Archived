@@ -17,7 +17,8 @@ int main ()
 {
     ToolsFControl tools;
     tools.SetSamplingTime(0.01);
-    OnlineSystemIdentification model(1,1);
+    int numOrder=1,denOrder=1;
+    OnlineSystemIdentification model(numOrder,denOrder);
 //    vector<double> num(1),den(1);
 
     //Controllers
@@ -62,7 +63,7 @@ int main ()
     SocketCanPort pm3("can1");
     CiA402Device m3 (33, &pm3);
 
-    IPlot p1;
+    IPlot p1,id;
 
 
     double posan1, posan2, posan3;
@@ -91,7 +92,7 @@ int main ()
     double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tv1=1-0.01*((rand() % 10 + 1)-5);
+        tv1=1-0.05*((rand() % 10 + 1)-5);
 
 //        cout << "tv1 " << tv1;
         m1.SetVelocity(tv1);
@@ -112,6 +113,22 @@ int main ()
     }
 
 
+
+    vector<double> num(numOrder+1),den(denOrder+1);
+    model.GetZTransferFunction(num,den);
+    cout << num[1] << endl;
+    SystemBlock idsys(num,den);
+
+    for (double t=0; t<10; t+=dts)
+
+    {
+
+        id.pushBack( 1 > idsys );
+        //Gz.PrintZTransferFunction(dts);
+        //Gz.PrintParamsVector();
+
+    }
+
     m1.SetupPositionMode();
 
     m1.SetPosition(0);
@@ -119,6 +136,7 @@ int main ()
     sleep(4);
 
     p1.Plot();
+    id.Plot();
 
 targets.close();
 controls.close();
