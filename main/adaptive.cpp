@@ -119,7 +119,7 @@ int main ()
         v1 = (m1.GetVelocity() > filter);
         model.UpdateSystem(cs1 ,v1 );
 
-        p1.pushBack(cs1 - v1);
+        p1.pushBack(m1.GetPosition());
 
 //        model.GetZTransferFunction(num,den);
         model.PrintZTransferFunction(dts);

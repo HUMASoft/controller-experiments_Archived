@@ -29,7 +29,7 @@ int main ()
 //    0.09516
 //   ----------
 //   z - 0.9048
-//    SystemBlock filter(0.09516,0,- 0.9048,1);
+    SystemBlock filter(0.09516,0,- 0.9048,1);
 
 
     //Tau=0.5
@@ -38,10 +38,11 @@ int main ()
 //  z - 0.9802
 //    SystemBlock filter(0.0198,0,- 0.9802,1);
 
+    //Tau=??
 //    0.1813
 //  ----------
 //  z - 0.8187
-    SystemBlock filter(0.1813,0,- 0.8187,1);
+//    SystemBlock filter(0.1813,0,- 0.8187,1);
 
     string folder="~/Escritorio";
 
@@ -75,24 +76,24 @@ int main ()
 
 
     double ep1,ev1,cs1;
-    double tp1,tv1,v1;
+    double tp1,tv1,v1,tt1;
     double ep2,ev2,cs2;
     double ep3,ev3,cs3;
 
 //    m1.Setup_Torque_Mode();
 //    tv1=2;
 
-    m1.Setup_Velocity_Mode();
 //    m1.SetupPositionMode();
-//    m1.Setup_Torque_Mode();
 
 
+/*//velocity to velocity id
 
+    m1.Setup_Velocity_Mode();
 
     double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tv1=1-0.05*((rand() % 10 + 1)-5);
+        tv1=1;//-0.01*((rand() % 10 + 1)-5);
 
 //        cout << "tv1 " << tv1;
         m1.SetVelocity(tv1);
@@ -101,22 +102,45 @@ int main ()
         model.UpdateSystem( tv1, v1 );
 
         p1.pushBack(v1);
-//        tv1=tv1/10000;
-//        m1.SetTorque(tv1);
-//        model.UpdateSystem( tv1,m1.GetVelocity() );
+//        model.PrintZTransferFunction(dts);
+
+        tools.WaitSamplingTime();
+    }
+*/
+
+
+    m1.Setup_Torque_Mode();
+
+    //torque to velocity id
+    double interval=5; //in seconds
+    for (double t=0;t<interval; t+=dts)
+    {
+        tt1=-0.001*((rand() % 10 + 1)-5);
+
+                cout << "tt1 " << tt1 << endl;
+        m1.SetTorque(tt1);
+
+        v1 = m1.GetVelocity() > filter;
+        model.UpdateSystem( tt1, v1 );
+
+        p1.pushBack(v1);
+        //        tv1=tv1/10000;
+        //        m1.SetTorque(tv1);
+        //        model.UpdateSystem( tv1,m1.GetVelocity() );
         //        model.GetZTransferFunction(num,den);
-        model.PrintZTransferFunction(dts);
+        //        model.PrintZTransferFunction(dts);
 
 
         tools.WaitSamplingTime();
-
     }
 
 
 
+    m1.SetupPositionMode();
+    m1.SetPosition(0);
+
     vector<double> num(numOrder+1),den(denOrder+1);
     model.GetZTransferFunction(num,den);
-    cout << num[1] << endl;
     SystemBlock idsys(num,den);
 
     for (double t=0; t<10; t+=dts)
@@ -129,14 +153,14 @@ int main ()
 
     }
 
-    m1.SetupPositionMode();
 
-    m1.SetPosition(0);
 
-    sleep(4);
+
 
     p1.Plot();
     id.Plot();
+
+    sleep(4);
 
 targets.close();
 controls.close();
