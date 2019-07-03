@@ -44,6 +44,10 @@ int main ()
 //  z - 0.8187
 //    SystemBlock filter(0.1813,0,- 0.8187,1);
 
+//    SystemBlock filterInput(filter);
+
+    model.SetFilter(filter);
+
     string folder="~/Escritorio";
 
     ofstream targets (folder+".targets.csv");
@@ -86,36 +90,36 @@ int main ()
 //    m1.SetupPositionMode();
 
 
-/*//velocity to velocity id
 
+    //velocity to velocity id
     m1.Setup_Velocity_Mode();
-
-    double interval=5; //in seconds
+    double interval=10; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tv1=1;//-0.01*((rand() % 10 + 1)-5);
+        tv1=1-0.5*((rand() % 10 + 1)-5);
 
 //        cout << "tv1 " << tv1;
         m1.SetVelocity(tv1);
 
-        v1 = m1.GetVelocity() > filter;
-        model.UpdateSystem( tv1, v1 );
+        v1 = m1.GetVelocity();// > filter;
+//        model.UpdateSystem( tv1 > filterInput, v1 );
+
+        model.UpdateSystem( tv1 ,v1 );
 
         p1.pushBack(v1);
-//        model.PrintZTransferFunction(dts);
+        model.PrintZTransferFunction(dts);
 
         tools.WaitSamplingTime();
     }
-*/
 
 
-    m1.Setup_Torque_Mode();
-
+/*
     //torque to velocity id
+    m1.Setup_Torque_Mode();
     double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tt1=-0.001*((rand() % 10 + 1)-5);
+        tt1=+0.001*((rand() % 10 + 1)-5);
 
                 cout << "tt1 " << tt1 << endl;
         m1.SetTorque(tt1);
@@ -133,7 +137,7 @@ int main ()
 
         tools.WaitSamplingTime();
     }
-
+*/
 
 
     m1.SetupPositionMode();

@@ -59,6 +59,7 @@ int main ()
 
 //    SystemBlock filterInput(filter);
 
+    model.SetFilter(filter);
 
     string folder="~/Escritorio";
 
@@ -73,7 +74,7 @@ int main ()
     CiA402Device m1 (31, &pm31, &sd31);
     m1.StartNode();
     m1.SwitchOn();
-    PIDBlock c1(2,0.5,0,dts);
+    PIDBlock c1(2,1,0,dts);
 
     SocketCanPort pm2("can1");
     CiA402Device m2 (32, &pm2);
@@ -103,23 +104,25 @@ int main ()
 
     double input;
 
-    double interval=4; //in seconds
+    double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
-        tp1=3;
+        tp1=0;
 
         ep1=tp1- m1.GetPosition();
         cs1= ep1 > c1;
-//        cs1=cs1/10000;
+        cs1=cs1+0.2*((rand() % 10 + 1)-5);;
 
-//        cout << tp1 << endl;
-        cs1=cs1-0.1*((rand() % 10 + 1)-5);
+        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
+//        cs1=cs1
         m1.SetVelocity(cs1);
-        v1 = (m1.GetVelocity() > filter);
+        v1 = (m1.GetVelocity());
         model.UpdateSystem(cs1 ,v1 );
 
+//        p1.pushBack(v1 > filter);
         p1.pushBack(m1.GetPosition());
+
 
 //        model.GetZTransferFunction(num,den);
         model.PrintZTransferFunction(dts);
@@ -179,7 +182,7 @@ int main ()
 
 
     m1.SetupPositionMode();
-    m1.SetPosition(0);
+//    m1.SetPosition(0);
 
     sleep(tp1);
 
