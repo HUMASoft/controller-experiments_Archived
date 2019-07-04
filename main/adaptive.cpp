@@ -17,7 +17,7 @@ int main ()
 {
     ToolsFControl tools;
     tools.SetSamplingTime(0.01);
-    int numOrder=1,denOrder=1;
+    int numOrder=0,denOrder=1;
 
     OnlineSystemIdentification model(numOrder,denOrder);
 //    vector<double> num(1),den(1);
@@ -104,17 +104,17 @@ int main ()
 
     double input;
 
-    double interval=5; //in seconds
+    double interval=10; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
-        tp1=0;
+        tp1=3;
 
         ep1=tp1- m1.GetPosition();
         cs1= ep1 > c1;
         cs1=cs1+0.2*((rand() % 10 + 1)-5);;
 
-        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
+//        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
 //        cs1=cs1
         m1.SetVelocity(cs1);
         v1 = (m1.GetVelocity());
