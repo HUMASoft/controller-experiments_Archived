@@ -15,16 +15,6 @@
 
 int main ()
 {
-    ToolsFControl tools;
-    tools.SetSamplingTime(0.01);
-    int numOrder=0,denOrder=1;
-
-    OnlineSystemIdentification model(numOrder,denOrder);
-//    vector<double> num(1),den(1);
-
-    //Controllers
-    double dts=0.01;
-
 
     //tau = 0.1
 //    0.09516
@@ -59,7 +49,20 @@ int main ()
 
 //    SystemBlock filterInput(filter);
 
-    model.SetFilter(filter);
+    ToolsFControl tools;
+    tools.SetSamplingTime(0.01);
+    int numOrder=1,denOrder=1;
+
+    OnlineSystemIdentification model(numOrder,denOrder,filter);
+//    vector<double> num(1),den(1);
+
+    //Controllers
+    double dts=0.01;
+
+
+
+
+//    model.SetFilter(filter);
 
     string folder="~/Escritorio";
 
@@ -108,17 +111,17 @@ int main ()
     for (double t=0;t<interval; t+=dts)
     {
 
-        tp1=2*(1/interval)*t;
+        tp1=3*(1/interval)*t;
 
         ep1=tp1- m1.GetPosition();
         cs1= ep1 > c1;
-        cs1=cs1+0.2*((rand() % 10 + 1)-5);;
+        cs1=cs1+0.1*((rand() % 10 + 1)-5);;
 
 //        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
 //        cs1=cs1
         m1.SetVelocity(cs1);
         v1 = (m1.GetVelocity());
-        model.UpdateSystemDT1(cs1 ,v1 );
+        model.UpdateSystem(cs1 ,v1 );
 
 //        p1.pushBack(v1 > filter);
         p1.pushBack(m1.GetPosition());
@@ -161,7 +164,6 @@ int main ()
 
     vector<double> num(numOrder+1),den(denOrder+1);
     model.GetZTransferFunction(num,den);
-    cout << num[1] << endl;
     SystemBlock idsys(num,den);
 
     for (double t=0; t<10; t+=dts)

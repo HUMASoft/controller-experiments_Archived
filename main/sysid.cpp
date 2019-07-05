@@ -96,7 +96,7 @@ int main ()
     double interval=10; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
-        tv1=1-0.5*((rand() % 10 + 1)-5);
+        tv1=0.5-0.5*((rand() % 10 + 1)-5);
 
 //        cout << "tv1 " << tv1;
         m1.SetVelocity(tv1);
