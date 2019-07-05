@@ -59,7 +59,8 @@ int main ()
 
 
     //controllers
-    PIDBlock c1(2,1,0,dts);
+//    PIDBlock c1(2,1,0,dts);
+    FPDBlock c1(8.67,20.53,-0.83,dts);
 
 
     double posan1, posan2, posan3;
@@ -84,11 +85,11 @@ int main ()
     for (double t=0;t<interval; t+=dts)
     {
 
-        tp1=3*(1/interval)*t;
+        tp1=0;//*(1/interval)*t;
 
         ep1=tp1- m1.GetPosition();
         cs1= ep1;// > c1;
-        cs1=cs1+0.1*((rand() % 10 + 1)-5);
+        cs1=cs1+0.2*((rand() % 10 + 1)-5);
 
 //        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
 //        cs1=cs1
@@ -101,7 +102,7 @@ int main ()
 
 
 //        model.GetZTransferFunction(num,den);
-//        model.PrintZTransferFunction(dts);
+        model.PrintZTransferFunction(dts);
 
 
         tools.WaitSamplingTime();
