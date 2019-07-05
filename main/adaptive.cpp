@@ -108,7 +108,7 @@ int main ()
     for (double t=0;t<interval; t+=dts)
     {
 
-        tp1=3;
+        tp1=2*(1/interval)*t;
 
         ep1=tp1- m1.GetPosition();
         cs1= ep1 > c1;
@@ -118,7 +118,7 @@ int main ()
 //        cs1=cs1
         m1.SetVelocity(cs1);
         v1 = (m1.GetVelocity());
-        model.UpdateSystem(cs1 ,v1 );
+        model.UpdateSystemDT1(cs1 ,v1 );
 
 //        p1.pushBack(v1 > filter);
         p1.pushBack(m1.GetPosition());
