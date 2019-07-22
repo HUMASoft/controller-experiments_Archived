@@ -54,7 +54,7 @@ int main ()
     int numOrder=1,denOrder=1;
 
     OnlineSystemIdentification model(numOrder,denOrder,filter);
-//    vector<double> num(1),den(1);
+//    vector<double> num(numOrder),den(denOrder);
 
     //Controllers
     double dts=0.01;
@@ -106,6 +106,7 @@ int main ()
     m1.Setup_Velocity_Mode();
 
     double input;
+    double mag, phi, w=2;
 
     double interval=10; //in seconds
     for (double t=0;t<interval; t+=dts)
@@ -115,7 +116,7 @@ int main ()
 
         ep1=tp1- m1.GetPosition();
         cs1= ep1 > c1;
-        cs1=cs1+0.1*((rand() % 10 + 1)-5);;
+        cs1=cs1+0.1*((rand() % 10 + 1)-5);
 
 //        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
 //        cs1=cs1
@@ -123,12 +124,14 @@ int main ()
         v1 = (m1.GetVelocity());
         model.UpdateSystem(cs1 ,v1 );
 
+        model.GetMagnitudeAndPhase(w,mag,phi);
 //        p1.pushBack(v1 > filter);
-        p1.pushBack(m1.GetPosition());
+//        p1.pushBack(m1.GetPosition());
+        p1.pushBack(phi);
 
 
 //        model.GetZTransferFunction(num,den);
-        model.PrintZTransferFunction(dts);
+//        model.PrintZTransferFunction(dts);
 
 
 

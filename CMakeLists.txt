@@ -5,6 +5,8 @@ project(controller-experiments)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/phi.m_exp.csv ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/CiA402Device/)
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/fcontrol/)
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/i-plot/)
