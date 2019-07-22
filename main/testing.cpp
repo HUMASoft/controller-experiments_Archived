@@ -15,20 +15,12 @@
 
 int main ()
 {
-    //Controllers
-    double dts=0.01;
-    double vel;
 
 
-    ToolsFControl tools;
-    tools.SetSamplingTime(dts);
 
-    //tau = 0.1
-//    0.09516
-//   ----------
-//   z - 0.9048
-//    SystemBlock filter(0.09516,0,- 0.9048,1);
+    TableInterpolation alpha("phi.m_exp.csv");
 
+<<<<<<< HEAD
 
     //Tau=0.5
 //    0.0198
@@ -92,9 +84,11 @@ double initialTorque = 0.001;
     m1.SetupPositionMode(1,1);
     m1.SetPosition(0);
     sleep(1);
+=======
+    cout << alpha.GetTableValue(30,12) << endl;
+>>>>>>> 8732e3ff9834b38e285836a44de750e7afbc1dc0
 
 
 
 return 0;
-
 }
