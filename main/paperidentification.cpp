@@ -34,11 +34,11 @@ int main ()
 
 //    model.SetFilter(filter);
 
-    string folder="~/Escritorio";
+    string folder="~/Escritorio/";
 
-    ofstream targets (folder+".targets.csv");
-    ofstream responses (folder+".responses.csv");
-    ofstream controls (folder+".controls.csv");
+    ofstream targets (folder+"targets.csv");
+    ofstream responses (folder+"responses.csv");
+    ofstream controls (folder+"controls.csv");
 
 
 
@@ -48,19 +48,31 @@ int main ()
     CiA402Device m1 (31, &pm31, &sd31);
     m1.StartNode();
     m1.SwitchOn();
+    m1.Setup_Velocity_Mode(10);
+
 
     //m2
     SocketCanPort pm2("can1");
     CiA402Device m2 (32, &pm2);
+    m2.StartNode();
+    m2.SwitchOn();
+    m2.Setup_Velocity_Mode(10);
 
     //m3
     SocketCanPort pm3("can1");
     CiA402Device m3 (33, &pm3);
+    m3.StartNode();
+    m3.SwitchOn();
+    m3.Setup_Velocity_Mode(10);
+
 
 
     //controllers
 //    PIDBlock c1(2,1,0,dts);
     FPDBlock c1(8.67,20.53,-0.83,dts);
+    FPDBlock c2(8.67,20.53,-0.83,dts);
+    FPDBlock c3(8.67,20.53,-0.83,dts);
+
 
 
     double posan1, posan2, posan3;
@@ -78,31 +90,32 @@ int main ()
     double ep3,ev3,cs3;
 
 
-    m1.Setup_Velocity_Mode();
+
+    tp1=0;//*(1/interval)*t;
 
 
-    double interval=10; //in seconds
+
+    double interval=6; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
-        tp1=0;//*(1/interval)*t;
 
         ep1=tp1- m1.GetPosition();
-        cs1= ep1;// > c1;
-        cs1=cs1+0.2*((rand() % 10 + 1)-5);
+        cs1= ep1 > c1;
+//        cs1=cs1+0.01*((rand() % 10 + 1)-5);
 
 //        cout << "target: " << tp1 << ", actual: " << m1.GetPosition() << endl;
 //        cs1=cs1
         m1.SetVelocity(cs1);
         v1 = (m1.GetVelocity());
-        model.UpdateSystem(cs1 ,v1 );
+//        model.UpdateSystem(cs1 ,v1 );
 
 //        p1.pushBack(v1 > filter);
         p1.pushBack(m1.GetPosition());
 
 
 //        model.GetZTransferFunction(num,den);
-        model.PrintZTransferFunction(dts);
+//        model.PrintZTransferFunction(dts);
 
 
         tools.WaitSamplingTime();
@@ -118,7 +131,7 @@ int main ()
 
 //    id.Plot();
     p1.Plot();
-
+//    p1.PlotAndSave("../pos.csv");
 
     m1.SetupPositionMode();
 //    m1.SetPosition(0);

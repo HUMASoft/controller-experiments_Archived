@@ -43,22 +43,40 @@ int main ()
 
     IPlot plot;
 
+//    m1.SetTorque(0.000000000000499900000);
 
 
-
+double initialTorque = 0.001;
     SocketCanPort pm31("can1");
     CiA402SetupData sd31(2048,24,0.001, 0.144);
     CiA402Device m1 (31, &pm31, &sd31);
     m1.StartNode();
     m1.SwitchOn();
-
-//    m1.Setup_Torque_Mode();
+    m1.Setup_Torque_Mode();
 //    tv1=2;
 
-    m1.Setup_Velocity_Mode();
-    m1.SetVelocity(1);
+    SocketCanPort pm32("can1");
+    CiA402SetupData sd32(2048,24,0.001, 0.144);
+    CiA402Device m2 (32, &pm32, &sd32);
+    m2.StartNode();
+    m2.SwitchOn();
+    m2.Setup_Torque_Mode();
 
-    for (double t=0; t<2;t+=dts)
+    SocketCanPort pm33("can1");
+    CiA402SetupData sd33(2048,24,0.001, 0.144);
+    CiA402Device m3 (33, &pm33, &sd33);
+    m3.StartNode();
+    m3.SwitchOn();
+    m3.Setup_Torque_Mode();
+
+    m1.SetTorque(initialTorque);
+    m2.SetTorque(initialTorque);
+    m3.SetTorque(initialTorque);
+
+//    m1.Setup_Velocity_Mode();
+//    m1.SetVelocity(1);
+
+    for (double t=0; t<1;t+=dts)
     {
         vel =  m1.GetVelocity() > filter;
         plot.pushBack( vel );
@@ -70,10 +88,10 @@ int main ()
 
 
 //    sleep(4);
-    m1.SetVelocity(0);
+//    m1.SetVelocity(0);
     m1.SetupPositionMode(1,1);
     m1.SetPosition(0);
-    sleep(4);
+    sleep(1);
 
 
 
