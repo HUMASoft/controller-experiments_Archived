@@ -15,8 +15,8 @@
 
 int main ()
 {
-    ToolsFControl tools;
-    tools.SetSamplingTime(0.01);
+    SamplingTime Ts;
+    Ts.SetSamplingTime(0.01);
     int numOrder=1,denOrder=1;
     OnlineSystemIdentification model(numOrder,denOrder);
 //    vector<double> num(1),den(1);
@@ -109,7 +109,7 @@ int main ()
         p1.pushBack(v1);
         model.PrintZTransferFunction(dts);
 
-        tools.WaitSamplingTime();
+        Ts.WaitSamplingTime();
     }
 
 

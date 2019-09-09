@@ -16,6 +16,8 @@ INCLUDE_DIRECTORIES(${SUBDIR_INCLUDE_DIRECTORIES})
 
 
 aux_source_directory(main SRC_LIST)
+aux_source_directory(utils SRC_LIST)
+
 
 #add_subdirectory(lib)
 

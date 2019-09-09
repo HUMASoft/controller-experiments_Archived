@@ -49,8 +49,8 @@ int main ()
 
 //    SystemBlock filterInput(filter);
 
-    ToolsFControl tools;
-    tools.SetSamplingTime(0.01);
+    SamplingTime Ts;
+    Ts.SetSamplingTime(0.01);
     int numOrder=1,denOrder=1;
 
     OnlineSystemIdentification model(numOrder,denOrder,filter);
@@ -108,7 +108,7 @@ int main ()
     double input;
     double mag, phi, w=2;
 
-    double interval=10; //in seconds
+    double interval=5; //in seconds
     for (double t=0;t<interval; t+=dts)
     {
 
@@ -124,7 +124,7 @@ int main ()
         v1 = (m1.GetVelocity());
         model.UpdateSystem(cs1 ,v1 );
 
-        model.GetMagnitudeAndPhase(w,mag,phi);
+        model.GetMagnitudeAndPhase(dts,w,mag,phi);
 //        p1.pushBack(v1 > filter);
 //        p1.pushBack(m1.GetPosition());
         p1.pushBack(phi);
@@ -142,7 +142,7 @@ int main ()
         //            cout << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
         //            responses << t << " , " << m1.GetVelocity() << " , " << m2.GetVelocity() <<  " , " << m3.GetVelocity() <<endl;
 
-        tools.WaitSamplingTime();
+        Ts.WaitSamplingTime();
 
 
     }

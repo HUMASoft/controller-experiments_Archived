@@ -27,8 +27,8 @@ int main ()
     //Samplinfg time
     double dts=0.01;
 
-    ToolsFControl tools;
-    tools.SetSamplingTime(dts);
+    SamplingTime Ts;
+    Ts.SetSamplingTime(dts);
 
 
 
@@ -118,7 +118,7 @@ int main ()
 //        model.PrintZTransferFunction(dts);
 
 
-        tools.WaitSamplingTime();
+        Ts.WaitSamplingTime();
 
 
     }
