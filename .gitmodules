@@ -7,3 +7,6 @@
 [submodule "lib/i-plot"]
 	path = lib/i-plot
 	url = https://github.com/munozyanez/i-plot.git
+[submodule "lib/sensor-integration"]
+	path = lib/sensor-integration
+	url = https://github.com/HUMASoft/sensor-integration.git
