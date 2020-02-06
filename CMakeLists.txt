@@ -10,6 +10,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/phi.m_exp.csv ${CMAKE_CURRENT_B
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/CiA402Device/)
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/fcontrol/)
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/i-plot/)
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/sensor-integration/)
 
 
 INCLUDE_DIRECTORIES(${SUBDIR_INCLUDE_DIRECTORIES})

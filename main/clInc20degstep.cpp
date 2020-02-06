@@ -11,7 +11,7 @@
 #include "IPlot.h"
 #include "OnlineSystemIdentification.h"
 
-#include "Kinematics.h"
+//#include "Kinematics.h"
 
 
 // Demo Close loop with Inclination Sensor, steps 20º incl - 0..45º orientation.
@@ -23,7 +23,7 @@ int main ()
 {
     //--sensor--
     SerialArduino tilt;
-    float incSensor,oriSensor;
+    double incSensor,oriSensor;
 //    sleep(4); //wait for sensor
 
     ofstream data("/home/humasoft/code/graficas/graficas_demos/clinc20degs-400g.csv",std::ofstream::out); // /home/humasoft/code/graficas
@@ -104,7 +104,7 @@ int main ()
     double l0=0.1085;
     double lg0=l0+0.002;
     double radius=0.0075; //winch radius
-    GeoInkinematics neck_ik(0.052,0.052,l0); //kinematics geometric
+    //GeoInkinematics neck_ik(0.052,0.052,l0); //kinematics geometric
     vector<double> lengths(3);
 
     double inc=20.0; //inclination tendon length
