@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     ///Check the status of the device
     j1.PrintStatus();
     ///Start the node (allow sdo, pdo)
+    j1.Reset();
     j1.StartNode();
     ///Change the state machine to switched on
     j1.SwitchOn();
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
 
     SocketCanPort p2("can1");
     CiA402Device j2(32,&p2);
+    j2.Reset();
     j2.PrintStatus();
     j2.StartNode();
     j2.SwitchOn();
@@ -45,6 +47,7 @@ int main(int argc, char *argv[])
 
     SocketCanPort p3("can1");
     CiA402Device j3(33,&p1);
+    j3.Reset();
     j3.PrintStatus();
     j3.StartNode();
     j3.SwitchOn();
