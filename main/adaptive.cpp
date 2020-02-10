@@ -51,7 +51,7 @@ int main ()
 
     SamplingTime Ts;
     Ts.SetSamplingTime(0.01);
-    int numOrder=1,denOrder=1;
+    int numOrder=2,denOrder=2;
 
     OnlineSystemIdentification model(numOrder,denOrder,filter);
 //    vector<double> num(numOrder),den(denOrder);
@@ -75,6 +75,7 @@ int main ()
     SocketCanPort pm31("can1");
     CiA402SetupData sd31(2048,24,0.001, 0.144);
     CiA402Device m1 (31, &pm31, &sd31);
+    m1.Reset();
     m1.StartNode();
     m1.SwitchOn();
     PIDBlock c1(2,1,0,dts);
@@ -187,7 +188,7 @@ int main ()
 
 
     m1.SetupPositionMode();
-//    m1.SetPosition(0);
+    m1.SetPosition(0);
 
     sleep(tp1);
 
